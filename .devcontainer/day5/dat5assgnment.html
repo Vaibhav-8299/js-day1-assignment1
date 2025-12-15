@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript Practice Tasks</title>
+    <title>JavaScript Tasks 1–12</title>
 
     <style>
         body {
@@ -40,12 +40,17 @@
         img {
             margin-top: 10px;
         }
+
+        #clock {
+            font-size: 24px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <!-- Task 1 -->
-    <h2>Task 1: Change Text</h2>
+    <h2>Task 1: Change Text on Button Click</h2>
     <p id="textPara">Hello!</p>
     <button onclick="changeText()">Click Me</button>
 
@@ -100,6 +105,15 @@
     <!-- Task 10 -->
     <h2>Task 10: Theme Switcher</h2>
     <button onclick="toggleTheme()">Toggle Light / Dark</button>
+
+    <!-- Task 11 -->
+    <h2>Task 11: Live Clock</h2>
+    <p id="clock">00:00:00</p>
+
+    <!-- Task 12 -->
+    <h2>Task 12: Random Quote Generator</h2>
+    <p id="quote">Click the button to see a quote</p>
+    <button onclick="generateQuote()">New Quote</button>
 
     <script>
         // Task 1
@@ -186,6 +200,31 @@
         // Task 10
         function toggleTheme() {
             document.body.classList.toggle("dark");
+        }
+
+        // Task 11: Live Clock
+        function updateClock() {
+            let now = new Date();
+            let h = String(now.getHours()).padStart(2, '0');
+            let m = String(now.getMinutes()).padStart(2, '0');
+            let s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById("clock").innerText = h + ":" + m + ":" + s;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Task 12: Random Quote Generator
+        let quotes = [
+            "Believe in yourself.",
+            "Practice makes perfect.",
+            "Success comes from hard work.",
+            "Never stop learning.",
+            "Dream big and work hard."
+        ];
+
+        function generateQuote() {
+            let index = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").innerText = quotes[index];
         }
     </script>
 
