@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #7e8ba3 50%, #b8c6db 75%, #e8f0f8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.95) 0%, rgba(42, 82, 152, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-icon {
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-icon:hover {
+            transform: translateY(-4px) rotate(360deg) scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+        }
+
+        .navbar-heading {
+            flex: 1;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .navbar-heading::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
+        }
+
+        .navbar-heading::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            padding: 48px;
+            max-width: 640px;
+            width: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        label span {
+            color: var(--error-color);
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #ffffff;
+            color: var(--text-primary);
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .radio-option:hover {
+            background: var(--bg-light);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            transition: background 0.2s ease;
+        }
+
+        .checkbox-group:hover {
+            background: var(--bg-light);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        input.error,
+        select.error {
+            border-color: var(--error-color);
+            animation: shake 0.3s ease;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 50%, #ee5a6f 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .form-view {
+            display: block;
+        }
+
+        .form-view.hidden {
+            display: none;
+        }
+
+        .success-view {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-view.show {
+            display: block;
+        }
+
+        .success-message {
+            color: var(--success-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .success-message::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .output-data {
+            color: var(--text-primary);
+            line-height: 2.5;
+            font-size: 18px;
+            text-align: left;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            white-space: pre-line;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            font-weight: 500;
+        }
+
+        .back-button {
+            width: auto;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 50%, #ee5a6f 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .back-button:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .form-heading {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, transparent, #ff6b6b, transparent) 1;
+        }
+
+        .form-heading h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 640px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar-heading {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-icon">🎓</div>
+        <div class="navbar-heading">Student Registration Form</div>
+        <div style="width: 50px;"></div> <!-- Spacer for center alignment -->
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+        <!-- Registration Form View -->
+        <div class="form-view" id="formView">
+            <div class="form-heading">
+                <h1>Student Registration Form</h1>
+            </div>
+            <form id="registrationForm" novalidate>
+                <div class="form-group">
+                    <label for="name">Name <span style="color: red;">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name">
+                    <div class="error-message" id="nameError">Name should not be empty</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span style="color: red;">*</span></label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email">
+                    <div class="error-message" id="emailError">Email should be valid</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender <span style="color: red;">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="male" name="gender" value="Male">
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="female" name="gender" value="Female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="other" name="gender" value="Other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="genderError">Gender must be selected</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course <span style="color: red;">*</span></label>
+                    <select id="course" name="course">
+                        <option value="">Select a course</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                        <option value="React">React</option>
+                        <option value="Node.js">Node.js</option>
+                    </select>
+                    <div class="error-message" id="courseError">Course must be selected</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms">
+                        <label for="terms">I agree to the Terms & Conditions <span style="color: red;">*</span></label>
+                    </div>
+                    <div class="error-message" id="termsError">Terms checkbox must be checked</div>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Success Page View -->
+        <div class="success-view" id="successView">
+            <div class="success-message">Registration Successful!</div>
+            <div class="output-data" id="outputData"></div>
+            <button class="back-button" id="backButton">Back to Registration</button>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const formView = document.getElementById('formView');
+        const successView = document.getElementById('successView');
+        const outputData = document.getElementById('outputData');
+        const backButton = document.getElementById('backButton');
+
+        // Get all form elements
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const genderInputs = document.querySelectorAll('input[name="gender"]');
+        const courseSelect = document.getElementById('course');
+        const termsCheckbox = document.getElementById('terms');
+
+        // Get all error elements
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const genderError = document.getElementById('genderError');
+        const courseError = document.getElementById('courseError');
+        const termsError = document.getElementById('termsError');
+
+        // Email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Validation functions
+        function validateName() {
+            const name = nameInput.value.trim();
+            if (name === '') {
+                showError(nameInput, nameError);
+                return false;
+            }
+            hideError(nameInput, nameError);
+            return true;
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            if (email === '') {
+                showError(emailInput, emailError);
+                return false;
+            }
+            if (!emailRegex.test(email)) {
+                showError(emailInput, emailError);
+                return false;
+            }
+            hideError(emailInput, emailError);
+            return true;
+        }
+
+        function validateGender() {
+            const selected = Array.from(genderInputs).some(radio => radio.checked);
+            if (!selected) {
+                showError(genderInputs[0], genderError);
+                return false;
+            }
+            hideError(genderInputs[0], genderError);
+            return true;
+        }
+
+        function validateCourse() {
+            const course = courseSelect.value;
+            if (course === '') {
+                showError(courseSelect, courseError);
+                return false;
+            }
+            hideError(courseSelect, courseError);
+            return true;
+        }
+
+        function validateTerms() {
+            if (!termsCheckbox.checked) {
+                showError(termsCheckbox, termsError);
+                return false;
+            }
+            hideError(termsCheckbox, termsError);
+            return true;
+        }
+
+        function showError(element, errorElement) {
+            element.classList.add('error');
+            errorElement.classList.add('show');
+        }
+
+        function hideError(element, errorElement) {
+            element.classList.remove('error');
+            errorElement.classList.remove('show');
+        }
+
+        // Real-time validation on input
+        nameInput.addEventListener('blur', validateName);
+        nameInput.addEventListener('input', function() {
+            if (nameInput.value.trim() !== '') {
+                hideError(nameInput, nameError);
+            }
+        });
+
+        emailInput.addEventListener('blur', validateEmail);
+        emailInput.addEventListener('input', function() {
+            if (emailInput.value.trim() !== '' && emailRegex.test(emailInput.value.trim())) {
+                hideError(emailInput, emailError);
+            }
+        });
+
+        genderInputs.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (radio.checked) {
+                    hideError(genderInputs[0], genderError);
+                }
+            });
+        });
+
+        courseSelect.addEventListener('change', function() {
+            if (courseSelect.value !== '') {
+                hideError(courseSelect, courseError);
+            }
+        });
+
+        termsCheckbox.addEventListener('change', function() {
+            if (termsCheckbox.checked) {
+                hideError(termsCheckbox, termsError);
+            }
+        });
+
+        // Function to show success page
+        function showSuccessPage() {
+            formView.classList.add('hidden');
+            successView.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to show registration form
+        function showRegistrationForm() {
+            successView.classList.remove('show');
+            formView.classList.remove('hidden');
+            form.reset();
+            
+            // Clear all errors
+            hideError(nameInput, nameError);
+            hideError(emailInput, emailError);
+            hideError(genderInputs[0], genderError);
+            hideError(courseSelect, courseError);
+            hideError(termsCheckbox, termsError);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Back button event listener
+        backButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            showRegistrationForm();
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+
+            // Validate all fields
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isGenderValid = validateGender();
+            const isCourseValid = validateCourse();
+            const isTermsValid = validateTerms();
+
+            // If all validations pass
+            if (isNameValid && isEmailValid && isGenderValid && isCourseValid && isTermsValid) {
+                // Get selected gender
+                const selectedGender = Array.from(genderInputs).find(radio => radio.checked).value;
+
+                // Display output in the exact format specified
+                outputData.textContent = `Name: ${nameInput.value.trim()}\nEmail: ${emailInput.value.trim()}\nGender: ${selectedGender}\nCourse: ${courseSelect.value}`;
+
+                // Show success page
+                showSuccessPage();
+            }
+        });
+    </script>
+</body>
+</html>
+
